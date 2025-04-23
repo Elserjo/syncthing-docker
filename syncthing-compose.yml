@@ -1,0 +1,25 @@
+version: "3"
+services:
+  syncthing:
+    image: syncthing/syncthing:1.29.5@sha256:86df3f5f50c4a293105b26e900aabf93bf6fe281d0c19752b121c1c52f60e173
+    container_name: syncthing
+    hostname: syncthing-vds
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Moscow
+      - STGUIADDRESS=https://0.0.0.0:8384
+    volumes:
+        - /docker/syncthing/config/:/var/syncthing
+        - /docker/syncthing/data/:/mnt
+    ports:
+      - 8384:8384 # Web UI
+      - 22000:22000/tcp # TCP file transfers
+      - 22000:22000/udp # QUIC file transfers
+    restart: unless-stopped
+    userns_mode: "host"
+    healthcheck:
+      test: curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
+      interval: 1m
+      timeout: 10s
+      retries: 3

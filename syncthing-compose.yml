@@ -5,8 +5,8 @@ services:
     container_name: syncthing
     hostname: syncthing-vds
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=1000 #I use docker remap. syncthing uid = 166536 = 1000 in docker container
+      - PGID=1000 #Same for group here
       - TZ=Europe/Moscow
       - STGUIADDRESS=https://0.0.0.0:8384
     volumes:
@@ -17,7 +17,7 @@ services:
       - 22000:22000/tcp # TCP file transfers
       - 22000:22000/udp # QUIC file transfers
     restart: unless-stopped
-    userns_mode: "host"
+    #userns_mode: "host"
     healthcheck:
       test: curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
       interval: 1m

@@ -1,7 +1,7 @@
 version: "3"
 services:
   syncthing:
-    image: syncthing/syncthing:1.29.5@sha256:86df3f5f50c4a293105b26e900aabf93bf6fe281d0c19752b121c1c52f60e173
+    image: syncthing/syncthing:1.29.6@sha256:b99b11704d42e6deef7233af8dd4f4971c2626ef167dcb4f7bfa5c9110355a83
     container_name: syncthing
     hostname: syncthing-vds
     environment:
